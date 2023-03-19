@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AuthController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
 
@@ -14,10 +15,13 @@ use App\Http\Controllers\UserController;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+Route::get('/', [AuthController::class, 'loginPage'])->name('Login Page');
+Route::get('/login', [AuthController::class, 'loginPage'])->name('Login Page');
 
 Route::prefix('/user')->group(function () {
     Route::get('/list', [UserController::class, 'list'])->name('User Lists');
+});
+
+Route::prefix('/auth')->group(function () {
+    Route::post('/login', [AuthController::class, 'login'])->name('User Login');
 });
